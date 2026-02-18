@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Montenegro - Plano de Trabalho</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1a365d;
+            --secondary: #2c5282;
+            --accent: #ed8936;
+            --success: #38a169;
+            --warning: #d69e2e;
+            --danger: #e53e3e;
+            --light: #f7fafc;
+            --dark: #1a202c;
+            --gray: #718096;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        header h1 {
+            color: var(--primary);
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--gray);
+            font-size: 1.1em;
+        }
+
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .stat-card .number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stat-card .label {
+            color: var(--gray);
+            margin-top: 5px;
+        }
+
+        .tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .tab {
+            background: rgba(255,255,255,0.9);
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+
+        .tab:hover, .tab.active {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            display: none;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            color: var(--primary);
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--accent);
+        }
+
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .area-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 20px;
+            border-left: 5px solid var(--secondary);
+        }
+
+        .area-card h3 {
+            color: var(--primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .area-card ul {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        .area-card li {
+            padding: 5px 0;
+            color: var(--dark);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .area-card .size {
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+
+        /* Checklist Styles */
+        .frequency-section {
+            margin-bottom: 30px;
+        }
+
+        .frequency-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .frequency-header.daily { background: #c6f6d5; }
+        .frequency-header.weekly { background: #bee3f8; }
+        .frequency-header.biweekly { background: #faf089; }
+        .frequency-header.monthly { background: #fed7aa; }
+        .frequency-header.quarterly { background: #feb2b2; }
+        .frequency-header.semester { background: #e9d8fd; }
+
+        .frequency-header h3 {
+            flex: 1;
+            color: var(--dark);
+        }
+
+        .frequency-header .badge {
+            background: rgba(0,0,0,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .task-list {
+            padding: 0 20px;
+        }
+
+        .task-category {
+            margin-bottom: 20px;
+        }
+
+        .task-category h4 {
+            color: var(--secondary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            background: var(--light);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .task-item:hover {
+            background: #edf2f7;
+            transform: translateX(5px);
+        }
+
+        .task-item.completed {
+            background: #c6f6d5;
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+
+        .task-item input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            margin-right: 15px;
+            cursor: pointer;
+        }
+
+        .task-item .task-text {
+            flex: 1;
+        }
+
+        .task-item .assignee {
+            background: var(--secondary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+
+        .task-item .assignee.unassigned {
+            background: var(--gray);
+        }
+
+        /* Maresia Section */
+        .warning-banner {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .warning-banner .icon {
+            font-size: 3em;
+        }
+
+        .warning-banner h3 {
+            font-size: 1.3em;
+        }
+
+        .warning-banner p {
+            opacity: 0.9;
+        }
+
+        .maresia-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .maresia-card {
+            background: var(--light);
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .maresia-card-header {
+            padding: 20px;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .maresia-card-header.doors { background: #805ad5; }
+        .maresia-card-header.electronics { background: #3182ce; }
+        .maresia-card-header.metals { background: #dd6b20; }
+        .maresia-card-header.glass { background: #38a169; }
+        .maresia-card-header.kit { background: #e53e3e; }
+
+        .maresia-card-content {
+            padding: 20px;
+        }
+
+        .maresia-card-content h4 {
+            color: var(--secondary);
+            margin: 15px 0 10px 0;
+            font-size: 0.95em;
+            text-transform: uppercase;
+        }
+
+        .maresia-card-content ul {
+            list-style: none;
+        }
+
+        .maresia-card-content li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .maresia-card-content li:last-child {
+            border-bottom: none;
+        }
+
+        /* Team Section */
+        .team-section {
+            margin-top: 30px;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .team-card {
+            background: var(--light);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            border: 3px dashed #cbd5e0;
+            transition: all 0.3s;
+        }
+
+        .team-card:hover {
+            border-color: var(--primary);
+        }
+
+        .team-card.filled {
+            border: 3px solid var(--success);
+            background: #f0fff4;
+        }
+
+        .team-card .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .team-card.filled .avatar {
+            background: var(--success);
+            color: white;
+        }
+
+        .team-card h3 {
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .team-card .role {
+            color: var(--gray);
+            font-size: 0.9em;
+        }
+
+        .team-card .task-count {
+            margin-top: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .add-member-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1em;
+            margin-top: 15px;
+        }
+
+        /* Weekly Schedule */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .schedule-table th, .schedule-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .schedule-table th {
+            background: var(--primary);
+            color: white;
+        }
+
+        .schedule-table tr:hover {
+            background: var(--light);
+        }
+
+        .schedule-table .day {
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 20px;
+        }
+
+        .progress-bar {
+            height: 25px;
+            background: #e2e8f0;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #68d391);
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: white;
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .tab {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+            
+            .content-section {
+                padding: 20px;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .tabs, footer {
+                display: none;
+            }
+            
+            .content-section {
+                display: block !important;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏠 Casa Montenegro</h1>
+            <p>Plano de Trabalho - Limpeza, Manutenção e Cuidados</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-card">
+                <div class="number" id="total-areas">22</div>
+                <div class="label">Áreas da Casa</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="total-tasks">87</div>
+                <div class="label">Tarefas Totais</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="completed-tasks">0</div>
+                <div class="label">Concluídas Hoje</div>
+            </div>
+            <div class="stat-card">
+                <div class="number" id="team-members">0</div>
+                <div class="label">Membros da Equipe</div>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showSection('areas')">🏠 Áreas da Casa</button>
+            <button class="tab" onclick="showSection('daily')">📅 Tarefas Diárias</button>
+            <button class="tab" onclick="showSection('weekly')">📆 Cronograma Semanal</button>
+            <button class="tab" onclick="showSection('periodic')">🔄 Tarefas Periódicas</button>
+            <button class="tab" onclick="showSection('maresia')">⚠️ Protocolo Maresia</button>
+            <button class="tab" onclick="showSection('team')">👥 Equipe</button>
+        </div>
+
+        <!-- ÁREAS DA CASA -->
+        <div id="areas" class="content-section active">
+            <h2 class="section-title">🏠 Áreas da Casa</h2>
+            
+            <div class="area-grid">
+                <div class="area-card">
+                    <h3>🚗 Subsolo</h3>
+                    <ul>
+                        <li><span>Hall de Entrada</span><span class="size">25,22m²</span></li>
+                        <li><span>Quarto de Serviço</span><span class="size">12,75m²</span></li>
+                        <li><span>Copa</span><span class="size">2,62m²</span></li>
+                        <li><span>WC Serviço</span><span class="size">3,35m²</span></li>
+                        <li><span>WC Auxiliar</span><span class="size">3,08m²</span></li>
+                        <li><span>Lavanderia</span><span class="size">18,14m²</span></li>
+                        <li><span>Elevador</span><span class="size">-</span></li>
+                    </ul>
+                </div>
+
+                <div class="area-card">
+                    <h3>🛋️ Áreas Sociais</h3>
+                    <ul>
+                        <li><span>Sala Estar/Jantar</span><span class="size">58,19m²</span></li>
+                        <li><span>Cozinha</span><span class="size">21,39m²</span></li>
+                        <li><span>Home Theater</span><span class="size">15,54m²</span></li>
+                        <li><span>Studio</span><span class="size">10,92m²</span></li>
+                        <li><span>Área de Serviço</span><span class="size">8,98m²</span></li>
+                        <li><span>Lavabo</span><span class="size">4,92m²</span></li>
+                    </ul>
+                </div>
+
+                <div class="area-card">
+                    <h3>👑 Suíte Master</h3>
+                    <ul>
+                        <li><span>Quarto</span><span class="size">39,55m²</span></li>
+                        <li><span>WC Dele</span><span class="size">8,34m²</span></li>
+                        <li><span>WC Dela</span><span class="size">16,91m²</span></li>
+                        <li><span>Closet Dele</span><span class="size">13,12m²</span></li>
+                        <li><span>Closet Dela</span><span class="size">15,88m²</span></li>
+                    </ul>
+                </div>
+
+                <div class="area-card">
+                    <h3>🛏️ Suítes</h3>
+                    <ul>
+                        <li><span>Suíte 01</span><span class="size">16,70m²</span></li>
+                        <li><span>WC 01</span><span class="size">5,31m²</span></li>
+                        <li><span>Suíte 02 (Hóspedes)</span><span class="size">13,80m²</span></li>
+                        <li><span>Closet Hóspedes 2</span><span class="size">4,63m²</span></li>
+                        <li><span>WC Hóspedes 2</span><span class="size">3,79m²</span></li>
+                        <li><span>Suíte 03</span><span class="size">10,58m²</span></li>
+                        <li><span>WC 03</span><span class="size">3,96m²</span></li>
+                    </ul>
+                </div>
+
+                <div class="area-card">
+                    <h3>🌴 Área Externa</h3>
+                    <ul>
+                        <li><span>Varanda</span><span class="size">97,98m²</span></li>
+                        <li><span>Deck</span><span class="size">60,65m²</span></li>
+                        <li><span>SPA</span><span class="size">18,00m²</span></li>
+                        <li><span>Piscina + Jacuzzi + Prainha</span><span class="size">-</span></li>
+                        <li><span>Jardim</span><span class="size">-</span></li>
+                        <li><span>WC Externo Dele/Dela</span><span class="size">3,62m²</span></li>
+                        <li><span>Depósito/DML</span><span class="size">1,81m²</span></li>
+                    </ul>
+                </div>
+
+                <div class="area-card">
+                    <h3>🏢 Rooftop</h3>
+                    <ul>
+                        <li><span>Escritório</span><span class="size">28,69m²</span></li>
+                        <li><span>WC Escritório</span><span class="size">3,48m²</span></li>
+                        <li><span>Depósito/Rouparia</span><span class="size">10,85m²</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAREFAS DIÁRIAS -->
+        <div id="daily" class="content-section">
+            <h2 class="section-title">📅 Tarefas Diárias</h2>
+            
+            <div class="progress-container">
+                <p style="margin-bottom: 10px;">Progresso de Hoje: <span id="daily-progress-text">0%</span></p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="daily-progress" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <div class="task-list" style="margin-top: 30px;">
+                <div class="task-category">
+                    <h4>🛋️ Áreas Sociais</h4>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Sala Estar/Jantar — aspirar/varrer, organizar</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Cozinha — limpar bancadas, fogão, pia, piso</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Lavabo — limpar e repor itens</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                </div>
+
+                <div class="task-category">
+                    <h4>🛏️ Quartos em Uso</h4>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Suíte Master — arrumar cama, organizar, lixo</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Banheiros em uso — limpar bancada e vaso</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                </div>
+
+                <div class="task-category">
+                    <h4>🌴 Área Externa</h4>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Deck/Varanda — varrer folhas, organizar móveis</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Piscina — verificar nível e aspecto da água</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRONOGRAMA SEMANAL -->
+        <div id="weekly" class="content-section">
+            <h2 class="section-title">📆 Cronograma Semanal de Limpeza Completa</h2>
+            
+            <table class="schedule-table">
+                <thead>
+                    <tr>
+                        <th>Dia</th>
+                        <th>Áreas</th>
+                        <th>Responsável</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day">Segunda</td>
+                        <td>Suíte Master + Closets + WCs</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                    <tr>
+                        <td class="day">Terça</td>
+                        <td>Suítes 01, 02, 03 + WCs</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                    <tr>
+                        <td class="day">Quarta</td>
+                        <td>Sala + Cozinha + Lavabo</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                    <tr>
+                        <td class="day">Quinta</td>
+                        <td>Home Theater + Studio + Área Serviço</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                    <tr>
+                        <td class="day">Sexta</td>
+                        <td>Área Externa (Varanda, Deck, SPA)</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                    <tr>
+                        <td class="day">Sábado</td>
+                        <td>Subsolo + Rooftop</td>
+                        <td><span class="assignee unassigned">A definir</span></td>
+                        <td>⏳ Pendente</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 40px; color: var(--primary);">📋 Tarefas Semanais Fixas</h3>
+            <div class="task-list" style="margin-top: 20px;">
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Trocar roupas de cama</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Lavar banheiros completos (box, piso, rejuntes)</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Limpar espelhos e vidros internos</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Aspirar estofados</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Lavar panos de prato/cozinha</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Limpeza piscina (tratamento químico)</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">Regar plantas internas</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAREFAS PERIÓDICAS -->
+        <div id="periodic" class="content-section">
+            <h2 class="section-title">🔄 Tarefas Periódicas</h2>
+
+            <div class="frequency-section">
+                <div class="frequency-header biweekly">
+                    <span>📆</span>
+                    <h3>Quinzenal</h3>
+                    <span class="badge">8 tarefas</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar vidros externos (varanda, deck)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar eletrodomésticos por dentro (geladeira, micro-ondas, forno)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Lavar tapetes</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar luminárias e ventiladores</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Organizar closets (verificar roupas fora do lugar)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar móveis de madeira (cera/lustrador)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Manutenção jardim (poda leve, limpeza canteiros)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar pontos de oxidação em metais</span></div>
+                </div>
+            </div>
+
+            <div class="frequency-section">
+                <div class="frequency-header monthly">
+                    <span>📅</span>
+                    <h3>Mensal</h3>
+                    <span class="badge">14 tarefas</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza profunda da cozinha (armários, atrás de eletros)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de ar-condicionado (filtros)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar ralos e sifões</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar caixa de gordura</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Impermeabilização/hidratação de decks e madeiras</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar sistema de automação (keypads, sensores)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Testar botoeiras e fechos elétricos</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar câmeras de segurança</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar bombas (piscina, SPA)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Lavar colchões (aspirar + antiácaro)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar estofados profundamente</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar extintores e kit emergência</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar alinhamento de portas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Aplicar cera protetora em metais cromados</span></div>
+                </div>
+            </div>
+
+            <div class="frequency-section">
+                <div class="frequency-header quarterly">
+                    <span>📆</span>
+                    <h3>Trimestral</h3>
+                    <span class="badge">9 tarefas</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de caixa d'água</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Dedetização preventiva</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar calhas e escoamento</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Manutenção elevador (empresa especializada)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisar vedações de janelas/portas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de fachada</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Impermeabilização áreas externas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisão hidráulica geral</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisão elétrica geral</span></div>
+                </div>
+            </div>
+
+            <div class="frequency-section">
+                <div class="frequency-header semester">
+                    <span>📅</span>
+                    <h3>Semestral / Anual</h3>
+                    <span class="badge">7 tarefas</span>
+                </div>
+                <div class="task-list">
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de reservatório de água</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Pintura de retoques</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisão do sistema de aquecimento (SPA/Jacuzzi)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisão do sistema de automação completo</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Manutenção preventiva ar-condicionado (técnico)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar impermeabilização da laje</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisão do sistema de segurança (câmeras, biometria)</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROTOCOLO MARESIA -->
+        <div id="maresia" class="content-section">
+            <h2 class="section-title">⚠️ Protocolo Anti-Maresia</h2>
+            
+            <div class="warning-banner">
+                <span class="icon">🌊</span>
+                <div>
+                    <h3>ATENÇÃO: Zona de Alta Maresia</h3>
+                    <p>A casa está localizada em uma das áreas com maior maresia do mundo. A corrosão é acelerada 5-10x. Cuidados especiais são OBRIGATÓRIOS.</p>
+                </div>
+            </div>
+
+            <div class="maresia-grid">
+                <div class="maresia-card">
+                    <div class="maresia-card-header doors">🚪 Portas e Esquadrias</div>
+                    <div class="maresia-card-content">
+                        <h4>Semanal</h4>
+                        <ul>
+                            <li>✓ Limpar trilhos de portas de correr com pano úmido + secar</li>
+                            <li>✓ Verificar vedações de borracha (ressecamento)</li>
+                            <li>✓ Lubrificar dobradiças com óleo de silicone</li>
+                        </ul>
+                        <h4>Quinzenal</h4>
+                        <ul>
+                            <li>✓ Aplicar silicone spray em fechaduras e maçanetas</li>
+                            <li>✓ Limpar e secar todas as ferragens metálicas</li>
+                            <li>✓ Verificar pontos de oxidação (tratar imediatamente)</li>
+                        </ul>
+                        <h4>Mensal</h4>
+                        <ul>
+                            <li>✓ Aplicar cera protetora em portas de madeira</li>
+                            <li>✓ Verificar alinhamento de portas</li>
+                            <li>✓ Inspecionar esquadrias de alumínio</li>
+                        </ul>
+                        <h4>Trimestral</h4>
+                        <ul>
+                            <li>✓ Reaplicar verniz/selador em madeiras expostas</li>
+                            <li>✓ Trocar vedações danificadas</li>
+                            <li>✓ Revisão completa de fechaduras</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="maresia-card">
+                    <div class="maresia-card-header electronics">⚡ Equipamentos Eletrônicos</div>
+                    <div class="maresia-card-content">
+                        <h4>Quinzenal</h4>
+                        <ul>
+                            <li>✓ Limpar gabinetes externos de ar-condicionado</li>
+                            <li>✓ Verificar conectores e bornes (oxidação verde = alerta)</li>
+                            <li>✓ Limpar keypads de automação</li>
+                        </ul>
+                        <h4>Mensal</h4>
+                        <ul>
+                            <li>✓ Verificar fechos elétricos das portas</li>
+                            <li>✓ Inspecionar leitores biométricos e Face ID</li>
+                            <li>✓ Limpar câmeras de segurança</li>
+                            <li>✓ Verificar rack de dados</li>
+                            <li>✓ Testar botoeiras e interfones</li>
+                        </ul>
+                        <h4>Trimestral</h4>
+                        <ul>
+                            <li>✓ Revisão técnica do sistema de automação</li>
+                            <li>✓ Verificar placas eletrônicas</li>
+                            <li>✓ Aplicar spray protetor de contatos</li>
+                            <li>✓ Manutenção preventiva de bombas</li>
+                        </ul>
+                        <h4>Semestral</h4>
+                        <ul>
+                            <li>✓ Manutenção completa ar-condicionado</li>
+                            <li>✓ Revisão do sistema de som</li>
+                            <li>✓ Verificar inversores e quadros elétricos</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="maresia-card">
+                    <div class="maresia-card-header metals">🔧 Metais em Geral</div>
+                    <div class="maresia-card-content">
+                        <h4>Semanal</h4>
+                        <ul>
+                            <li>✓ Limpar todos os metais com pano úmido + secar completamente</li>
+                            <li>✓ Atenção especial: torneiras, registros, ralos metálicos</li>
+                        </ul>
+                        <h4>Mensal</h4>
+                        <ul>
+                            <li>✓ Aplicar cera protetora em metais cromados</li>
+                            <li>✓ Verificar corrimãos e guarda-corpos</li>
+                            <li>✓ Inspecionar fixações metálicas de móveis</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="maresia-card">
+                    <div class="maresia-card-header glass">🪟 Vidros</div>
+                    <div class="maresia-card-content">
+                        <h4>Semanal</h4>
+                        <ul>
+                            <li>✓ Limpar vidros com limpa-vidros + secar bordas</li>
+                        </ul>
+                        <h4>Mensal</h4>
+                        <ul>
+                            <li>✓ Limpar trilhos e borrachas de vedação</li>
+                            <li>✓ Verificar silicone de vedação (reaplicar se necessário)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="maresia-card">
+                    <div class="maresia-card-header kit">🧰 Kit de Manutenção Anti-Maresia</div>
+                    <div class="maresia-card-content">
+                        <h4>Ter Sempre em Casa</h4>
+                        <ul>
+                            <li>🔸 Óleo de silicone spray</li>
+                            <li>🔸 Spray protetor de contatos elétricos</li>
+                            <li>🔸 Cera protetora para metais</li>
+                            <li>🔸 Verniz marítimo para retoques</li>
+                            <li>🔸 Graxa branca para trilhos</li>
+                            <li>🔸 Limpa-contato eletrônico</li>
+                            <li>🔸 Removedor de ferrugem (gel)</li>
+                            <li>🔸 Selador de silicone (reposição de vedações)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EQUIPE -->
+        <div id="team" class="content-section">
+            <h2 class="section-title">👥 Equipe da Casa</h2>
+            
+            <p style="color: var(--gray); margin-bottom: 30px;">
+                Adicione os membros da equipe para atribuir responsabilidades às tarefas.
+            </p>
+
+            <div class="team-grid">
+                <div class="team-card" id="add-member-card">
+                    <div class="avatar">➕</div>
+                    <h3>Adicionar Membro</h3>
+                    <p class="role">Clique para adicionar</p>
+                    <button class="add-member-btn" onclick="addTeamMember()">+ Novo Membro</button>
+                </div>
+            </div>
+
+            <div class="team-section" style="margin-top: 50px;">
+                <h3 style="color: var(--primary); margin-bottom: 20px;">📋 Funções Sugeridas</h3>
+                <div class="area-grid">
+                    <div class="area-card">
+                        <h3>🏠 Governanta / Gerente da Casa</h3>
+                        <ul>
+                            <li>Coordenação geral das tarefas</li>
+                            <li>Supervisão da equipe</li>
+                            <li>Controle de estoque e compras</li>
+                            <li>Gestão de fornecedores</li>
+                        </ul>
+                    </div>
+                    <div class="area-card">
+                        <h3>🧹 Auxiliar de Limpeza</h3>
+                        <ul>
+                            <li>Limpeza diária das áreas</li>
+                            <li>Organização dos ambientes</li>
+                            <li>Lavagem de roupas</li>
+                        </ul>
+                    </div>
+                    <div class="area-card">
+                        <h3>🌿 Jardineiro / Piscineiro</h3>
+                        <ul>
+                            <li>Manutenção do jardim</li>
+                            <li>Tratamento da piscina/SPA</li>
+                            <li>Limpeza de área externa</li>
+                        </ul>
+                    </div>
+                    <div class="area-card">
+                        <h3>🔧 Manutenção</h3>
+                        <ul>
+                            <li>Reparos gerais</li>
+                            <li>Protocolo anti-maresia</li>
+                            <li>Verificação de equipamentos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Casa Montenegro - Plano de Trabalho v1.0</p>
+            <p>Última atualização: <span id="last-update"></span></p>
+        </footer>
+    </div>
+
+    <script>
+        // Tab Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Toggle Task
+        function toggleTask(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            element.classList.toggle('completed', checkbox.checked);
+            updateProgress();
+            saveState();
+        }
+
+        // Update Progress
+        function updateProgress() {
+            const dailyTasks = document.querySelectorAll('#daily .task-item');
+            const completed = document.querySelectorAll('#daily .task-item.completed').length;
+            const total = dailyTasks.length;
+            const percent = Math.round((completed / total) * 100);
+            
+            document.getElementById('daily-progress').style.width = percent + '%';
+            document.getElementById('daily-progress-text').textContent = percent + '%';
+            document.getElementById('completed-tasks').textContent = completed;
+        }
+
+        // Add Team Member (placeholder)
+        function addTeamMember() {
+            const name = prompt('Nome do membro:');
+            if (!name) return;
+            
+            const role = prompt('Função:');
+            if (!role) return;
+
+            const grid = document.querySelector('.team-grid');
+            const card = document.createElement('div');
+            card.className = 'team-card filled';
+            card.innerHTML = `
+                <div class="avatar">👤</div>
+                <h3>${name}</h3>
+                <p class="role">${role}</p>
+                <div class="task-count">
+                    <strong>0</strong> tarefas atribuídas
+                </div>
+            `;
+            grid.insertBefore(card, document.getElementById('add-member-card'));
+            
+            document.getElementById('team-members').textContent = 
+                document.querySelectorAll('.team-card.filled').length;
+            
+            saveState();
+        }
+
+        // Save State to LocalStorage
+        function saveState() {
+            const state = {
+                tasks: [],
+                team: []
+            };
+            
+            document.querySelectorAll('.task-item').forEach((task, index) => {
+                state.tasks.push({
+                    index: index,
+                    completed: task.classList.contains('completed')
+                });
+            });
+            
+            document.querySelectorAll('.team-card.filled').forEach(card => {
+                state.team.push({
+                    name: card.querySelector('h3').textContent,
+                    role: card.querySelector('.role').textContent
+                });
+            });
+            
+            localStorage.setItem('casaMontenegro', JSON.stringify(state));
+        }
+
+        // Load State from LocalStorage
+        function loadState() {
+            const saved = localStorage.getItem('casaMontenegro');
+            if (!saved) return;
+            
+            const state = JSON.parse(saved);
+            
+            state.tasks.forEach(task => {
+                const element = document.querySelectorAll('.task-item')[task.index];
+                if (element && task.completed) {
+                    element.classList.add('completed');
+                    element.querySelector('input[type="checkbox"]').checked = true;
+                }
+            });
+            
+            state.team.forEach(member => {
+                const grid = document.querySelector('.team-grid');
+                const card = document.createElement('div');
+                card.className = 'team-card filled';
+                card.innerHTML = `
+                    <div class="avatar">👤</div>
+                    <h3>${member.name}</h3>
+                    <p class="role">${member.role}</p>
+                    <div class="task-count">
+                        <strong>0</strong> tarefas atribuídas
+                    </div>
+                `;
+                grid.insertBefore(card, document.getElementById('add-member-card'));
+            });
+            
+            updateProgress();
+            document.getElementById('team-members').textContent = state.team.length;
+        }
+
+        // Initialize
+        document.getElementById('last-update').textContent = new Date().toLocaleDateString('pt-BR');
+        loadState();
+        updateProgress();
+    </script>
+</body>
+</html>
