@@ -341,6 +341,223 @@
             border-bottom: none;
         }
 
+        /* Product Cards - NEW */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        .product-header {
+            padding: 20px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .product-header .emoji {
+            font-size: 2.5em;
+        }
+
+        .product-header h3 {
+            flex: 1;
+            font-size: 1.2em;
+        }
+
+        .product-header .price {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .product-header.silicone { background: linear-gradient(135deg, #667eea, #764ba2); }
+        .product-header.contact { background: linear-gradient(135deg, #f093fb, #f5576c); }
+        .product-header.wax { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+        .product-header.varnish { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+        .product-header.grease { background: linear-gradient(135deg, #fa709a, #fee140); }
+        .product-header.cleaner { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+        .product-header.rust { background: linear-gradient(135deg, #ff9a9e, #fecfef); }
+        .product-header.sealant { background: linear-gradient(135deg, #667eea, #764ba2); }
+
+        .product-body {
+            padding: 20px;
+        }
+
+        .product-section {
+            margin-bottom: 15px;
+        }
+
+        .product-section h4 {
+            color: var(--primary);
+            font-size: 0.85em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .product-section p, .product-section li {
+            color: var(--dark);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        .product-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .product-section li {
+            padding: 4px 0;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .product-section li:before {
+            content: "•";
+            color: var(--accent);
+            position: absolute;
+            left: 5px;
+        }
+
+        .brand-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .brand-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: var(--light);
+            border-radius: 10px;
+            transition: all 0.2s;
+        }
+
+        .brand-item:hover {
+            background: #e2e8f0;
+        }
+
+        .brand-item .medal {
+            font-size: 1.2em;
+        }
+
+        .brand-item .name {
+            flex: 1;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .brand-item .desc {
+            font-size: 0.85em;
+            color: var(--gray);
+        }
+
+        .frequency-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .frequency-badge.weekly { background: #c6f6d5; color: #276749; }
+        .frequency-badge.biweekly { background: #faf089; color: #975a16; }
+        .frequency-badge.monthly { background: #fed7aa; color: #c05621; }
+        .frequency-badge.quarterly { background: #feb2b2; color: #c53030; }
+        .frequency-badge.demand { background: #e9d8fd; color: #6b46c1; }
+
+        .tip-box {
+            background: linear-gradient(135deg, #ffecd2, #fcb69f);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .tip-box h5 {
+            color: #c05621;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .tip-box p {
+            color: #744210;
+            font-size: 0.9em;
+        }
+
+        /* Shopping List */
+        .shopping-summary {
+            background: linear-gradient(135deg, #1a365d, #2c5282);
+            border-radius: 15px;
+            padding: 25px;
+            color: white;
+            margin-top: 30px;
+        }
+
+        .shopping-summary h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shopping-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .shopping-table th, .shopping-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .shopping-table th {
+            font-weight: 600;
+            opacity: 0.9;
+            font-size: 0.9em;
+            text-transform: uppercase;
+        }
+
+        .shopping-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .shopping-table .total-row {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .shopping-table .total-row td {
+            padding-top: 20px;
+            border-top: 2px solid rgba(255,255,255,0.3);
+        }
+
         /* Team Section */
         .team-section {
             margin-top: 30px;
@@ -464,6 +681,30 @@
             font-weight: bold;
         }
 
+        /* Collapsible */
+        .collapsible {
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .collapsible-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .collapsible-content.open {
+            max-height: 2000px;
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s;
+        }
+
+        .toggle-icon.open {
+            transform: rotate(180deg);
+        }
+
         /* Footer */
         footer {
             text-align: center;
@@ -489,6 +730,14 @@
             
             .content-section {
                 padding: 20px;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .maresia-grid {
+                grid-template-columns: 1fr;
             }
         }
 
@@ -516,6 +765,7 @@
         <header>
             <h1>🏠 Casa Montenegro</h1>
             <p>Plano de Trabalho - Limpeza, Manutenção e Cuidados</p>
+            <p style="margin-top: 10px; font-size: 0.9em; color: #e53e3e;">⚠️ Zona de Alta Maresia - Protocolo Especial Ativado</p>
         </header>
 
         <div class="stats-bar">
@@ -538,11 +788,12 @@
         </div>
 
         <div class="tabs">
-            <button class="tab active" onclick="showSection('areas')">🏠 Áreas da Casa</button>
-            <button class="tab" onclick="showSection('daily')">📅 Tarefas Diárias</button>
-            <button class="tab" onclick="showSection('weekly')">📆 Cronograma Semanal</button>
-            <button class="tab" onclick="showSection('periodic')">🔄 Tarefas Periódicas</button>
-            <button class="tab" onclick="showSection('maresia')">⚠️ Protocolo Maresia</button>
+            <button class="tab active" onclick="showSection('areas')">🏠 Áreas</button>
+            <button class="tab" onclick="showSection('daily')">📅 Diárias</button>
+            <button class="tab" onclick="showSection('weekly')">📆 Semanais</button>
+            <button class="tab" onclick="showSection('periodic')">🔄 Periódicas</button>
+            <button class="tab" onclick="showSection('maresia')">⚠️ Maresia</button>
+            <button class="tab" onclick="showSection('products')">🧴 Produtos</button>
             <button class="tab" onclick="showSection('team')">👥 Equipe</button>
         </div>
 
@@ -682,6 +933,15 @@
                         <span class="assignee unassigned">A definir</span>
                     </div>
                 </div>
+
+                <div class="task-category">
+                    <h4>⚠️ Protocolo Maresia (Diário)</h4>
+                    <div class="task-item" onclick="toggleTask(this)">
+                        <input type="checkbox">
+                        <span class="task-text">Verificar metais expostos — secar se houver umidade</span>
+                        <span class="assignee unassigned">A definir</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -768,6 +1028,14 @@
                     <input type="checkbox">
                     <span class="task-text">Regar plantas internas</span>
                 </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">⚠️ Lubrificar trilhos com óleo de silicone</span>
+                </div>
+                <div class="task-item" onclick="toggleTask(this)">
+                    <input type="checkbox">
+                    <span class="task-text">⚠️ Limpar metais com pano úmido + secar</span>
+                </div>
             </div>
         </div>
 
@@ -779,7 +1047,7 @@
                 <div class="frequency-header biweekly">
                     <span>📆</span>
                     <h3>Quinzenal</h3>
-                    <span class="badge">8 tarefas</span>
+                    <span class="badge">10 tarefas</span>
                 </div>
                 <div class="task-list">
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpar vidros externos (varanda, deck)</span></div>
@@ -789,7 +1057,9 @@
                     <div class="task-item"><input type="checkbox"><span class="task-text">Organizar closets (verificar roupas fora do lugar)</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpar móveis de madeira (cera/lustrador)</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Manutenção jardim (poda leve, limpeza canteiros)</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar pontos de oxidação em metais</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Aplicar silicone spray em fechaduras e maçanetas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Verificar pontos de oxidação em metais</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Limpar gabinetes externos de ar-condicionado</span></div>
                 </div>
             </div>
 
@@ -797,7 +1067,7 @@
                 <div class="frequency-header monthly">
                     <span>📅</span>
                     <h3>Mensal</h3>
-                    <span class="badge">14 tarefas</span>
+                    <span class="badge">16 tarefas</span>
                 </div>
                 <div class="task-list">
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza profunda da cozinha (armários, atrás de eletros)</span></div>
@@ -805,15 +1075,17 @@
                     <div class="task-item"><input type="checkbox"><span class="task-text">Verificar ralos e sifões</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpar caixa de gordura</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Impermeabilização/hidratação de decks e madeiras</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar sistema de automação (keypads, sensores)</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Testar botoeiras e fechos elétricos</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Limpar câmeras de segurança</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar bombas (piscina, SPA)</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Lavar colchões (aspirar + antiácaro)</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpar estofados profundamente</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Verificar extintores e kit emergência</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Verificar alinhamento de portas</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Aplicar cera protetora em metais cromados</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Verificar sistema de automação (keypads, sensores)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Testar botoeiras e fechos elétricos</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Limpar câmeras de segurança</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Verificar bombas (piscina, SPA)</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Verificar alinhamento de portas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Aplicar cera protetora em metais cromados</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Inspecionar leitores biométricos e Face ID</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Aplicar spray protetor de contatos elétricos</span></div>
                 </div>
             </div>
 
@@ -821,18 +1093,20 @@
                 <div class="frequency-header quarterly">
                     <span>📆</span>
                     <h3>Trimestral</h3>
-                    <span class="badge">9 tarefas</span>
+                    <span class="badge">11 tarefas</span>
                 </div>
                 <div class="task-list">
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de caixa d'água</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Dedetização preventiva</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Verificar calhas e escoamento</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Manutenção elevador (empresa especializada)</span></div>
-                    <div class="task-item"><input type="checkbox"><span class="task-text">Revisar vedações de janelas/portas</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Limpeza de fachada</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Impermeabilização áreas externas</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Revisão hidráulica geral</span></div>
                     <div class="task-item"><input type="checkbox"><span class="task-text">Revisão elétrica geral</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Reaplicar verniz marítimo em madeiras expostas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Revisar vedações de janelas/portas</span></div>
+                    <div class="task-item"><input type="checkbox"><span class="task-text">⚠️ Revisão técnica do sistema de automação</span></div>
                 </div>
             </div>
 
@@ -868,11 +1142,11 @@
 
             <div class="maresia-grid">
                 <div class="maresia-card">
-                    <div class="maresia-card-header doors">🚪 Portas e Esquadrias</div>
+                    <div class="maresia-card-header doors">🚪 Portas e Esquadrias (Pretas)</div>
                     <div class="maresia-card-content">
                         <h4>Semanal</h4>
                         <ul>
-                            <li>✓ Limpar trilhos de portas de correr com pano úmido + secar</li>
+                            <li>✓ Limpar trilhos com pano úmido + secar completamente</li>
                             <li>✓ Verificar vedações de borracha (ressecamento)</li>
                             <li>✓ Lubrificar dobradiças com óleo de silicone</li>
                         </ul>
@@ -890,7 +1164,7 @@
                         </ul>
                         <h4>Trimestral</h4>
                         <ul>
-                            <li>✓ Reaplicar verniz/selador em madeiras expostas</li>
+                            <li>✓ Reaplicar verniz marítimo em madeiras expostas</li>
                             <li>✓ Trocar vedações danificadas</li>
                             <li>✓ Revisão completa de fechaduras</li>
                         </ul>
@@ -903,7 +1177,7 @@
                         <h4>Quinzenal</h4>
                         <ul>
                             <li>✓ Limpar gabinetes externos de ar-condicionado</li>
-                            <li>✓ Verificar conectores e bornes (oxidação verde = alerta)</li>
+                            <li>✓ Verificar conectores (oxidação verde = alerta!)</li>
                             <li>✓ Limpar keypads de automação</li>
                         </ul>
                         <h4>Mensal</h4>
@@ -920,12 +1194,6 @@
                             <li>✓ Verificar placas eletrônicas</li>
                             <li>✓ Aplicar spray protetor de contatos</li>
                             <li>✓ Manutenção preventiva de bombas</li>
-                        </ul>
-                        <h4>Semestral</h4>
-                        <ul>
-                            <li>✓ Manutenção completa ar-condicionado</li>
-                            <li>✓ Revisão do sistema de som</li>
-                            <li>✓ Verificar inversores e quadros elétricos</li>
                         </ul>
                     </div>
                 </div>
@@ -952,7 +1220,7 @@
                     <div class="maresia-card-content">
                         <h4>Semanal</h4>
                         <ul>
-                            <li>✓ Limpar vidros com limpa-vidros + secar bordas</li>
+                            <li>✓ Limpar vidros com limpa-vidros + secar bordas (onde acumula sal)</li>
                         </ul>
                         <h4>Mensal</h4>
                         <ul>
@@ -961,23 +1229,474 @@
                         </ul>
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <div class="maresia-card">
-                    <div class="maresia-card-header kit">🧰 Kit de Manutenção Anti-Maresia</div>
-                    <div class="maresia-card-content">
-                        <h4>Ter Sempre em Casa</h4>
-                        <ul>
-                            <li>🔸 Óleo de silicone spray</li>
-                            <li>🔸 Spray protetor de contatos elétricos</li>
-                            <li>🔸 Cera protetora para metais</li>
-                            <li>🔸 Verniz marítimo para retoques</li>
-                            <li>🔸 Graxa branca para trilhos</li>
-                            <li>🔸 Limpa-contato eletrônico</li>
-                            <li>🔸 Removedor de ferrugem (gel)</li>
-                            <li>🔸 Selador de silicone (reposição de vedações)</li>
-                        </ul>
+        <!-- PRODUTOS - NOVO -->
+        <div id="products" class="content-section">
+            <h2 class="section-title">🧴 Kit de Manutenção Anti-Maresia</h2>
+            
+            <p style="color: var(--gray); margin-bottom: 25px;">
+                Produtos essenciais para manter em casa. Clique em cada produto para ver detalhes, marcas recomendadas e onde usar.
+            </p>
+
+            <div class="product-grid">
+                <!-- Produto 1: Óleo de Silicone -->
+                <div class="product-card">
+                    <div class="product-header silicone">
+                        <span class="emoji">🧴</span>
+                        <h3>Óleo de Silicone Spray</h3>
+                        <span class="price">R$ 45-60</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Lubrificar trilhos de portas/janelas de correr</li>
+                                <li>Proteger borrachas de vedação contra ressecamento</li>
+                                <li>Criar película protetora contra umidade e sal</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Todas as esquadrias de alumínio preto</li>
+                                <li>Portas de correr (varanda, deck, quartos)</li>
+                                <li>Vedações de borracha</li>
+                                <li>Dobradiças</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Nautispecial Silicone Náutico</span>
+                                    <span class="desc">Específico p/ maresia, 100% puro</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Wurth Silicone Spray</span>
+                                    <span class="desc">Profissional, alta durabilidade</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">WD-40 Specialist Silicone</span>
+                                    <span class="desc">Fácil de encontrar</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge weekly">⏱️ Semanal nos trilhos | Mensal nas borrachas</span>
                     </div>
                 </div>
+
+                <!-- Produto 2: Protetor de Contatos -->
+                <div class="product-card">
+                    <div class="product-header contact">
+                        <span class="emoji">⚡</span>
+                        <h3>Spray Protetor de Contatos</h3>
+                        <span class="price">R$ 40-55</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Proteger conexões elétricas contra oxidação</li>
+                                <li>Repelir umidade de placas e conectores</li>
+                                <li>Prevenir mau contato causado por maresia</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Quadros de automação (QD.AUT 01, 02, 03)</li>
+                                <li>Rack de dados e CFTV</li>
+                                <li>Leitores biométricos e Face ID</li>
+                                <li>Fechos elétricos das portas</li>
+                                <li>Keypads de automação</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">WD-40 Specialist Contact Cleaner</span>
+                                    <span class="desc">Limpa e protege</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Contactec Implastec</span>
+                                    <span class="desc">Brasileiro, ótimo custo-benefício</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Wurth Limpa Contatos</span>
+                                    <span class="desc">Profissional</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge monthly">⏱️ Mensal (quinzenal em época de chuva)</span>
+                    </div>
+                </div>
+
+                <!-- Produto 3: Cera para Metais -->
+                <div class="product-card">
+                    <div class="product-header wax">
+                        <span class="emoji">✨</span>
+                        <h3>Cera Protetora para Metais</h3>
+                        <span class="price">R$ 35-50</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Criar barreira contra oxidação em metais cromados</li>
+                                <li>Dar brilho e proteção duradoura</li>
+                                <li>Repelir água e sal da maresia</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Torneiras e metais de banheiro</li>
+                                <li>Maçanetas e puxadores</li>
+                                <li>Corrimãos e guarda-corpos</li>
+                                <li>Ralos metálicos</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Metal Blend Metal Polish</span>
+                                    <span class="desc">Com cera de carnaúba - proteção + brilho</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Nano4You Adeus Maresia</span>
+                                    <span class="desc">Específico para litoral</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Meguiars / Soft99</span>
+                                    <span class="desc">Cera automotiva (funciona bem)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge monthly">⏱️ Mensal</span>
+                    </div>
+                </div>
+
+                <!-- Produto 4: Verniz Marítimo -->
+                <div class="product-card">
+                    <div class="product-header varnish">
+                        <span class="emoji">🪵</span>
+                        <h3>Verniz Marítimo</h3>
+                        <span class="price">R$ 70-90</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Proteger madeiras expostas contra sol, chuva e maresia</li>
+                                <li>Retocar áreas desgastadas</li>
+                                <li>Impermeabilizar sem perder aparência natural</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Deck (60m²)</li>
+                                <li>Portas de madeira externas</li>
+                                <li>Móveis da varanda</li>
+                                <li>Pergolados e estruturas de madeira</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Sparlack Extra Marítimo (Coral)</span>
+                                    <span class="desc">Referência no Brasil, resistente à maresia</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Sayerlack Marítimo</span>
+                                    <span class="desc">Profissional, alta durabilidade</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Montana Verniz Marítimo</span>
+                                    <span class="desc">Bom custo-benefício</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge quarterly">⏱️ Trimestral (retoques) | Anual (completo)</span>
+                    </div>
+                </div>
+
+                <!-- Produto 5: Graxa/Lubrificante -->
+                <div class="product-card">
+                    <div class="product-header grease">
+                        <span class="emoji">⚙️</span>
+                        <h3>Graxa Adesiva Spray</h3>
+                        <span class="price">R$ 35-45</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Lubrificar mecanismos internos (fechaduras, roldanas)</li>
+                                <li>Penetrar em frestas e partes móveis</li>
+                                <li>Proteger contra atrito e corrosão</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Mecanismos internos de fechaduras</li>
+                                <li>Roldanas de portas de correr</li>
+                                <li>Dobradiças (parte interna)</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Wurth Graxa Adesiva W-MAX</span>
+                                    <span class="desc">Transparente/âmbar, não mancha</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">3M Silicone Lubricant</span>
+                                    <span class="desc">Transparente</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">WD-40 Specialist Graxa</span>
+                                    <span class="desc">Boa penetração</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tip-box">
+                            <h5>💡 Dica - Esquadria Preta</h5>
+                            <p>Use <strong>óleo de silicone</strong> nos trilhos visíveis (não mancha). Graxa só em mecanismos internos onde não aparece.</p>
+                        </div>
+                        <span class="frequency-badge biweekly">⏱️ Quinzenal nos trilhos | Mensal nas fechaduras</span>
+                    </div>
+                </div>
+
+                <!-- Produto 6: Limpa Contato -->
+                <div class="product-card">
+                    <div class="product-header cleaner">
+                        <span class="emoji">🔌</span>
+                        <h3>Limpa-Contato Eletrônico</h3>
+                        <span class="price">R$ 25-35</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Limpar oxidação e sujeira de contatos elétricos</li>
+                                <li>Remover resíduos de corrosão</li>
+                                <li>Preparar superfície antes do protetor</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Conectores com oxidação (verde = alerta!)</li>
+                                <li>Placas eletrônicas com sinais de corrosão</li>
+                                <li>Bornes e terminais</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Contactec Implastec</span>
+                                    <span class="desc">Seca rápido, não deixa resíduo</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">WD-40 Specialist Contact Cleaner</span>
+                                    <span class="desc">2 em 1 (limpa e protege)</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Wurth Limpa Contatos HHS</span>
+                                    <span class="desc">Profissional</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge demand">⏱️ Sob demanda (quando identificar oxidação)</span>
+                    </div>
+                </div>
+
+                <!-- Produto 7: Removedor de Ferrugem -->
+                <div class="product-card">
+                    <div class="product-header rust">
+                        <span class="emoji">🧹</span>
+                        <h3>Removedor de Ferrugem (Gel)</h3>
+                        <span class="price">R$ 50-80</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Remover ferrugem já instalada</li>
+                                <li>Tratar pontos de oxidação antes que espalhem</li>
+                                <li>Converter ferrugem em superfície tratável</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Qualquer metal com início de ferrugem</li>
+                                <li>Parafusos e fixações oxidadas</li>
+                                <li>Ferragens com manchas</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">WD-40 Rust Remover</span>
+                                    <span class="desc">Dissolve ferrugem sem esfregar</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Starrett Removedor de Ferrugem</span>
+                                    <span class="desc">Gel, fácil aplicação</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Naval Jelly</span>
+                                    <span class="desc">Importado, muito eficaz</span>
+                                </div>
+                            </div>
+                        </div>
+                        <span class="frequency-badge demand">⏱️ Sob demanda (quando identificar ferrugem)</span>
+                    </div>
+                </div>
+
+                <!-- Produto 8: Selador de Silicone -->
+                <div class="product-card">
+                    <div class="product-header sealant">
+                        <span class="emoji">🔲</span>
+                        <h3>Selador de Silicone</h3>
+                        <span class="price">R$ 20-35</span>
+                    </div>
+                    <div class="product-body">
+                        <div class="product-section">
+                            <h4>📌 Para que serve</h4>
+                            <ul>
+                                <li>Refazer vedações de esquadrias</li>
+                                <li>Selar frestas onde entra umidade/maresia</li>
+                                <li>Substituir borrachas danificadas</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏠 Onde usar na casa</h4>
+                            <ul>
+                                <li>Juntas de vidro com alumínio</li>
+                                <li>Vedação de box</li>
+                                <li>Frestas em janelas/portas</li>
+                            </ul>
+                        </div>
+                        <div class="product-section">
+                            <h4>🏆 Melhores Marcas</h4>
+                            <div class="brand-list">
+                                <div class="brand-item">
+                                    <span class="medal">🥇</span>
+                                    <span class="name">Tekbond Silicone Vidros & Alumínio</span>
+                                    <span class="desc">Específico, resiste maresia e UV</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥈</span>
+                                    <span class="name">Permatex Ultra Black</span>
+                                    <span class="desc">Silicone neutro preto - combina c/ esquadria</span>
+                                </div>
+                                <div class="brand-item">
+                                    <span class="medal">🥉</span>
+                                    <span class="name">Sil Trade Silicone Neutro</span>
+                                    <span class="desc">Bom custo-benefício</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tip-box">
+                            <h5>💡 Dica - Esquadria Preta</h5>
+                            <p>Use <strong>silicone preto ou transparente</strong>. Evite branco para não contrastar com a esquadria.</p>
+                        </div>
+                        <span class="frequency-badge demand">⏱️ Sob demanda (quando vedação trincar/soltar)</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lista de Compras Resumida -->
+            <div class="shopping-summary">
+                <h3>🛒 Lista de Compras - Kit Completo</h3>
+                <table class="shopping-table">
+                    <thead>
+                        <tr>
+                            <th>Produto</th>
+                            <th>Marca Recomendada</th>
+                            <th>Preço Médio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>🧴 Silicone Spray Náutico</td>
+                            <td>Nautispecial 400ml</td>
+                            <td>R$ 45-60</td>
+                        </tr>
+                        <tr>
+                            <td>⚡ Protetor Contatos</td>
+                            <td>WD-40 Specialist</td>
+                            <td>R$ 40-55</td>
+                        </tr>
+                        <tr>
+                            <td>✨ Cera Metais</td>
+                            <td>Metal Blend ou Nano4You</td>
+                            <td>R$ 35-50</td>
+                        </tr>
+                        <tr>
+                            <td>🪵 Verniz Marítimo</td>
+                            <td>Sparlack Extra 900ml</td>
+                            <td>R$ 70-90</td>
+                        </tr>
+                        <tr>
+                            <td>⚙️ Graxa Adesiva</td>
+                            <td>Wurth W-MAX Spray</td>
+                            <td>R$ 35-45</td>
+                        </tr>
+                        <tr>
+                            <td>🔌 Limpa Contato</td>
+                            <td>Contactec Implastec</td>
+                            <td>R$ 25-35</td>
+                        </tr>
+                        <tr>
+                            <td>🧹 Removedor Ferrugem</td>
+                            <td>WD-40 Rust Remover</td>
+                            <td>R$ 50-80</td>
+                        </tr>
+                        <tr>
+                            <td>🔲 Silicone Vedação</td>
+                            <td>Tekbond ou Permatex Preto</td>
+                            <td>R$ 20-35</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2">TOTAL ESTIMADO</td>
+                            <td>R$ 320-450</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
 
@@ -1039,7 +1758,7 @@
         </div>
 
         <footer>
-            <p>Casa Montenegro - Plano de Trabalho v1.0</p>
+            <p>Casa Montenegro - Plano de Trabalho v2.0</p>
             <p>Última atualização: <span id="last-update"></span></p>
         </footer>
     </div>
@@ -1074,7 +1793,7 @@
             document.getElementById('completed-tasks').textContent = completed;
         }
 
-        // Add Team Member (placeholder)
+        // Add Team Member
         function addTeamMember() {
             const name = prompt('Nome do membro:');
             if (!name) return;
