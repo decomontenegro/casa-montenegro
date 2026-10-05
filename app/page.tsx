@@ -1,408 +1,439 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import './globals.css'
-
-interface Expense {
-  id: string
-  description: string
-  amount: number
-  category: string
-  date: string
-}
+import {
+  Home,
+  CheckCircle2,
+  Users,
+  BarChart3,
+  Clock,
+  AlertCircle,
+  ChefHat,
+  Droplets,
+  Sofa,
+  Bed,
+  Warehouse,
+  Shirt,
+  Menu,
+  X,
+  TrendingUp,
+  DollarSign,
+} from 'lucide-react'
 
 interface Task {
   id: string
   title: string
-  description?: string
-  status: string
+  space: string
+  responsible: string
+  status: 'pending' | 'completed'
+  priority: 'high' | 'medium' | 'low'
+  dueDate?: string
 }
 
 interface TeamMember {
   id: string
   name: string
-  email: string
-  phone?: string
   role: string
+  phone?: string
+  email?: string
+}
+
+interface DailyReport {
+  name: string
+  date: string
+  completed: string[]
+  pending: string[]
+  notes?: string
 }
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState('dashboard')
-  const [expenses, setExpenses] = useState<Expense[]>([])
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([])
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState('')
-  const [formData, setFormData] = useState({ description: '', amount: '', category: 'food' })
+  const [tasks, setTasks] = useState<Task[]>([])
+  const [reports, setReports] = useState<DailyReport[]>([])
 
-  const API_BASE = 'http://localhost:3000'
-
+  // Load data from API on component mount
   useEffect(() => {
-    loadAllData()
+    const loadData = async () => {
+      try {
+        // Load team members
+        const teamRes = await fetch('/api/team')
+        if (teamRes.ok) {
+          const teamData = await teamRes.json()
+          setTeamMembers(teamData)
+        }
+
+        // Load tasks
+        const tasksRes = await fetch('/api/tasks')
+        if (tasksRes.ok) {
+          const tasksData = await tasksRes.json()
+          setTasks(tasksData)
+        }
+
+        // Load reports
+        const reportsRes = await fetch('/api/reports')
+        if (reportsRes.ok) {
+          const reportsData = await reportsRes.json()
+          setReports(reportsData)
+        }
+      } catch (error) {
+        console.log('Using fallback data')
+        // Fallback data if API fails
+        setTeamMembers(defaultTeamMembers)
+        setTasks(defaultTasks)
+        setReports(defaultReports)
+      }
+    }
+
+    loadData()
   }, [])
 
-  const loadAllData = async () => {
-    try {
-      setLoading(true)
-      const [expRes, taskRes, teamRes] = await Promise.all([
-        fetch(`${API_BASE}/api/expenses`).catch(() => ({ json: () => [] })),
-        fetch(`${API_BASE}/api/tasks`).catch(() => ({ json: () => [] })),
-        fetch(`${API_BASE}/api/team`).catch(() => ({ json: () => [] })),
-      ])
-      
-      const expensesData = await expRes.json()
-      const tasksData = await taskRes.json()
-      const teamData = await teamRes.json()
-      
-      setExpenses(Array.isArray(expensesData) ? expensesData : [])
-      setTasks(Array.isArray(tasksData) ? tasksData : [])
-      setTeamMembers(Array.isArray(teamData) ? teamData : [])
-    } catch (error) {
-      console.error('Erro ao carregar dados:', error)
-    } finally {
-      setLoading(false)
-    }
+  // Default data (fallback se API falhar)
+  const defaultTeamMembers: TeamMember[] = [
+    { id: '1', name: 'André Montenegro (Deco)', role: 'Dono/Admin', phone: '(85) 8817-7777', email: 'deco@casa.com' },
+    { id: '2', name: 'Daniella', role: 'Co-dona/Admin', email: 'daniella@casa.com' },
+    { id: '3', name: 'John', role: 'Gerente', email: 'john@casa.com' },
+    { id: '4', name: 'Jessica', role: 'Financeiro', email: 'jessica@casa.com' },
+    { id: '5', name: 'Deoclécio (Cléo)', role: 'Operação/Limpeza', email: 'cleo@casa.com' },
+    { id: '6', name: 'Regis Barcelos', role: 'Operação/Limpeza', phone: '(85) 9656-5120', email: 'regis@casa.com' },
+    { id: '7', name: 'Menina', role: 'Diarista', email: 'menina@casa.com' },
+  ]
+
+  const defaultTasks: Task[] = [
+    // COZINHA
+    { id: '1', title: 'Limpeza geral da cozinha', space: 'Cozinha', responsible: 'Cléo', status: 'pending', priority: 'high' },
+    { id: '2', title: 'Lavar louças', space: 'Cozinha', responsible: 'Cléo', status: 'completed', priority: 'high' },
+    { id: '3', title: 'Organizar despensa', space: 'Cozinha', responsible: 'Regis', status: 'pending', priority: 'medium' },
+    // BANHEIROS
+    { id: '4', title: 'Limpar espelhos e pias', space: 'Banheiros', responsible: 'Cléo', status: 'pending', priority: 'high' },
+    { id: '5', title: 'Limpar pisos', space: 'Banheiros', responsible: 'Regis', status: 'pending', priority: 'high' },
+    { id: '6', title: 'Desinfetar toiletes', space: 'Banheiros', responsible: 'Cléo', status: 'completed', priority: 'high' },
+    // SALAS
+    { id: '7', title: 'Varrer pisos', space: 'Salas', responsible: 'Regis', status: 'pending', priority: 'medium' },
+    { id: '8', title: 'Organizar móveis', space: 'Salas', responsible: 'Cléo', status: 'completed', priority: 'medium' },
+    { id: '9', title: 'Limpar TV e equipamentos', space: 'Salas', responsible: 'Regis', status: 'pending', priority: 'low' },
+    // QUARTOS
+    { id: '10', title: 'Trocar lençol', space: 'Quartos', responsible: 'Menina', status: 'pending', priority: 'high' },
+    { id: '11', title: 'Limpar pisos', space: 'Quartos', responsible: 'Cléo', status: 'pending', priority: 'medium' },
+    { id: '12', title: 'Verificar luminárias', space: 'Quartos', responsible: 'Regis', status: 'completed', priority: 'low' },
+    // ÁREAS COMUNS
+    { id: '13', title: 'Limpar halls e corredores', space: 'Áreas Comuns', responsible: 'Regis', status: 'pending', priority: 'medium' },
+    { id: '14', title: 'Varrer áreas externas', space: 'Áreas Comuns', responsible: 'Cléo', status: 'completed', priority: 'medium' },
+    { id: '15', title: 'Lixo e reciclagem', space: 'Áreas Comuns', responsible: 'Cléo', status: 'pending', priority: 'high' },
+    // LAVANDERIA
+    { id: '16', title: 'Lavar roupas de cama', space: 'Lavanderia', responsible: 'Menina', status: 'completed', priority: 'high' },
+    { id: '17', title: 'Passar e dobrar roupa', space: 'Lavanderia', responsible: 'Menina', status: 'pending', priority: 'high' },
+    { id: '18', title: 'Organizar armários', space: 'Lavanderia', responsible: 'Menina', status: 'pending', priority: 'medium' },
+  ]
+
+  const defaultReports: DailyReport[] = [
+    {
+      name: 'Deoclécio (Cléo)',
+      date: '2026-10-04',
+      completed: ['Limpeza cozinha', 'Lavar louças', 'Varrer salas', 'Desinfetar toiletes'],
+      pending: ['Limpar banheiros', 'Organizar despensa'],
+      notes: 'Dia produtivo. Tudo dentro do cronograma.',
+    },
+    {
+      name: 'Regis Barcelos',
+      date: '2026-10-04',
+      completed: ['Limpeza pisos (áreas comuns)', 'Organizar móveis (salas)', 'Lixo e reciclagem'],
+      pending: ['Limpar halls', 'Verificar luminárias'],
+      notes: 'Andamento normal. Sem problemas.',
+    },
+    {
+      name: 'John (Gerente)',
+      date: '2026-10-04',
+      completed: ['Coordenar equipe', 'Supervisionar tarefas', 'Planejamento semanal'],
+      pending: ['Reunião com Deco'],
+      notes: '85% das tarefas completadas. Performance boa.',
+    },
+  ]
+
+  // Use state data or defaults
+  const displayTeamMembers = teamMembers.length > 0 ? teamMembers : defaultTeamMembers
+  const displayTasks = tasks.length > 0 ? tasks : defaultTasks
+  const displayReports = reports.length > 0 ? reports : defaultReports
+
+  // MÉTRICAS
+  const pendingTasks = displayTasks.filter(t => t.status === 'pending').length
+  const completedTasks = displayTasks.filter(t => t.status === 'completed').length
+  const completionRate = Math.round((completedTasks / displayTasks.length) * 100)
+  const highPriorityTasks = displayTasks.filter(t => t.priority === 'high' && t.status === 'pending').length
+
+  const spaces = ['Cozinha', 'Banheiros', 'Salas', 'Quartos', 'Áreas Comuns', 'Lavanderia']
+  const spaceIcons = {
+    'Cozinha': ChefHat,
+    'Banheiros': Droplets,
+    'Salas': Sofa,
+    'Quartos': Bed,
+    'Áreas Comuns': Warehouse,
+    'Lavanderia': Shirt,
   }
 
-  const handleAddExpense = async (e: React.FormEvent) => {
-    e.preventDefault()
-    try {
-      setLoading(true)
-      const response = await fetch(`${API_BASE}/api/expenses`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          description: formData.description,
-          amount: parseFloat(formData.amount),
-          category: formData.category,
-          date: new Date().toISOString().split('T')[0],
-        }),
-      })
-      if (response.ok) {
-        setMessage('✅ Despesa adicionada com sucesso!')
-        setFormData({ description: '', amount: '', category: 'food' })
-        await loadAllData()
-        setTimeout(() => setMessage(''), 3000)
-      } else {
-        setMessage('❌ Erro ao adicionar despesa')
-      }
-    } catch (error) {
-      setMessage('❌ Erro ao conectar com API')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleDeleteExpense = async (id: string) => {
-    if (!confirm('Tem certeza que quer deletar esta despesa?')) return
-    try {
-      setLoading(true)
-      await fetch(`${API_BASE}/api/expenses/${id}`, { method: 'DELETE' })
-      setMessage('✅ Despesa deletada com sucesso!')
-      await loadAllData()
-      setTimeout(() => setMessage(''), 3000)
-    } catch (error) {
-      setMessage('❌ Erro ao deletar despesa')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const totalExpenses = expenses.reduce((sum, exp) => sum + (exp.amount || 0), 0)
-  const expensesByCategory = expenses.reduce((acc: any, exp) => {
-    acc[exp.category] = (acc[exp.category] || 0) + (exp.amount || 0)
-    return acc
-  }, {})
+  const tabs = [
+    { id: 'dashboard', label: 'Dashboard', icon: Home },
+    { id: 'tasks', label: 'Tarefas', icon: CheckCircle2 },
+    { id: 'team', label: 'Equipe', icon: Users },
+    { id: 'reports', label: 'Relatórios', icon: BarChart3 },
+  ]
 
   return (
-    <div style={{ minHeight: '100vh', background: '#f8f9fa' }}>
-      <header style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', color: 'white', padding: '40px 0', boxShadow: '0 4px 20px rgba(102, 126, 234, 0.3)' }}>
-        <div className="container">
-          <h1>💰 Casa Montenegro</h1>
-          <p>Gerenciador de Despesas e Tarefas Domésticas</p>
-          
-          <nav style={{ display: 'flex', gap: '15px', marginTop: '20px', flexWrap: 'wrap' }}>
-            {['dashboard', 'expenses', 'tasks', 'team', 'reports'].map(tab => (
-              <button
-                key={tab}
-                onClick={() => setActiveTab(tab)}
-                className={activeTab === tab ? 'active' : ''}
-                style={{
-                  padding: '12px 24px',
-                  border: 'none',
-                  background: activeTab === tab ? 'white' : 'rgba(255,255,255,0.2)',
-                  color: activeTab === tab ? '#667eea' : 'white',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontWeight: 600,
-                  transition: 'all 0.3s',
-                }}
-              >
-                {tab === 'dashboard' && '📊 Dashboard'}
-                {tab === 'expenses' && '💸 Despesas'}
-                {tab === 'tasks' && '✅ Tarefas'}
-                {tab === 'team' && '👥 Equipe'}
-                {tab === 'reports' && '📈 Relatórios'}
-              </button>
-            ))}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
+      {/* HEADER */}
+      <header className="bg-slate-900/50 backdrop-blur border-b border-slate-700">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <Home className="w-10 h-10 text-emerald-500" />
+              <div>
+                <h1 className="text-3xl font-bold text-white">Casa Montenegro</h1>
+                <p className="text-slate-400 text-sm">Gerenciador de Tarefas e Equipe</p>
+              </div>
+            </div>
+            <button
+              className="md:hidden p-2 hover:bg-slate-700 rounded-lg transition"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+
+          {/* NAVIGATION */}
+          <nav className={`flex gap-2 flex-wrap ${mobileMenuOpen ? 'block' : 'hidden md:flex'}`}>
+            {tabs.map((tab) => {
+              const Icon = tab.icon
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id)
+                    setMobileMenuOpen(false)
+                  }}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-emerald-500 text-white shadow-lg'
+                      : 'bg-slate-700 text-slate-300 hover:bg-slate-600'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  {tab.label}
+                </button>
+              )
+            })}
           </nav>
         </div>
       </header>
 
-      <main className="container">
-        {message && (
-          <div className={`message ${message.includes('✅') ? 'success' : 'error'}`}>
-            {message}
-          </div>
-        )}
-
-        {/* DASHBOARD TAB */}
+      {/* MAIN CONTENT */}
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+        {/* DASHBOARD */}
         {activeTab === 'dashboard' && (
           <>
-            <div className="grid">
-              <div className="card">
-                <div className="stat-number">R$ {totalExpenses.toFixed(2)}</div>
-                <div className="stat-label">Total de Despesas</div>
+            {/* STATS GRID */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+              <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-blue-100 text-sm font-medium mb-1">Pendentes</p>
+                    <p className="text-4xl font-bold text-white">{pendingTasks}</p>
+                  </div>
+                  <Clock className="w-12 h-12 text-blue-200 opacity-50" />
+                </div>
               </div>
-              <div className="card">
-                <div className="stat-number" style={{ color: '#10b981' }}>{expenses.length}</div>
-                <div className="stat-label">Despesas Registradas</div>
+
+              <div className="bg-gradient-to-br from-emerald-600 to-emerald-700 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-emerald-100 text-sm font-medium mb-1">Concluídas</p>
+                    <p className="text-4xl font-bold text-white">{completedTasks}</p>
+                  </div>
+                  <CheckCircle2 className="w-12 h-12 text-emerald-200 opacity-50" />
+                </div>
               </div>
-              <div className="card">
-                <div className="stat-number" style={{ color: '#f59e0b' }}>{tasks.filter(t => t.status === 'pending').length}</div>
-                <div className="stat-label">Tarefas Pendentes</div>
+
+              <div className="bg-gradient-to-br from-amber-600 to-amber-700 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-amber-100 text-sm font-medium mb-1">Taxa</p>
+                    <p className="text-4xl font-bold text-white">{completionRate}%</p>
+                  </div>
+                  <TrendingUp className="w-12 h-12 text-amber-200 opacity-50" />
+                </div>
+              </div>
+
+              <div className="bg-gradient-to-br from-red-600 to-red-700 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-shadow">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-red-100 text-sm font-medium mb-1">Urgentes</p>
+                    <p className="text-4xl font-bold text-white">{highPriorityTasks}</p>
+                  </div>
+                  <AlertCircle className="w-12 h-12 text-red-200 opacity-50" />
+                </div>
               </div>
             </div>
 
-            <div className="section">
-              <h2>📊 Resumo por Categoria</h2>
-              {Object.keys(expensesByCategory).length > 0 ? (
-                <div style={{ display: 'grid', gap: '10px' }}>
-                  {Object.entries(expensesByCategory).map(([category, amount]) => (
-                    <div key={category} style={{ display: 'flex', justifyContent: 'space-between', padding: '10px 0', borderBottom: '1px solid #e5e7eb' }}>
-                      <span style={{ color: '#333', fontWeight: 600 }}>{category}</span>
-                      <span style={{ color: '#667eea', fontWeight: 'bold' }}>R$ {(amount as number).toFixed(2)}</span>
+            {/* PRÓXIMAS TAREFAS */}
+            <div className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 shadow-xl">
+              <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-2">
+                <Clock className="w-6 h-6 text-blue-400" />
+                Próximas Tarefas
+              </h2>
+              <div className="space-y-3">
+                {displayTasks
+                  .filter(t => t.status === 'pending')
+                  .slice(0, 6)
+                  .map((task) => (
+                    <div key={task.id} className="flex items-center justify-between p-4 bg-slate-700/50 rounded-lg hover:bg-slate-700 transition-colors">
+                      <div className="flex-1">
+                        <p className="font-semibold text-white">{task.title}</p>
+                        <p className="text-sm text-slate-400">{task.space} • {task.responsible}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          task.priority === 'high' ? 'bg-red-900/50 text-red-300' :
+                          task.priority === 'medium' ? 'bg-yellow-900/50 text-yellow-300' :
+                          'bg-green-900/50 text-green-300'
+                        }`}>
+                          {task.priority === 'high' ? 'Alta' : task.priority === 'medium' ? 'Média' : 'Baixa'}
+                        </span>
+                      </div>
                     </div>
                   ))}
-                </div>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                  📭 Nenhuma despesa registrada ainda
-                </div>
-              )}
-            </div>
-
-            <div className="section">
-              <h2>📝 Últimas Despesas</h2>
-              {expenses.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Descrição</th>
-                      <th>Valor</th>
-                      <th>Categoria</th>
-                      <th>Data</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {expenses.slice(0, 5).map((exp) => (
-                      <tr key={exp.id}>
-                        <td>{exp.description}</td>
-                        <td style={{ fontWeight: 'bold', color: '#667eea' }}>R$ {exp.amount?.toFixed(2)}</td>
-                        <td>{exp.category}</td>
-                        <td>{new Date(exp.date).toLocaleDateString('pt-BR')}</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                  📭 Nenhuma despesa registrada
-                </div>
-              )}
+              </div>
             </div>
           </>
         )}
 
-        {/* EXPENSES TAB */}
-        {activeTab === 'expenses' && (
-          <>
-            <div className="section">
-              <h2>➕ Adicionar Nova Despesa</h2>
-              <form onSubmit={handleAddExpense}>
-                <div className="form-group">
-                  <label>Descrição</label>
-                  <input
-                    type="text"
-                    value={formData.description}
-                    onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    placeholder="Ex: Almoço, Gasolina, etc..."
-                    required
-                  />
-                </div>
-                <div className="form-row">
-                  <div className="form-group">
-                    <label>Valor (R$)</label>
-                    <input
-                      type="number"
-                      value={formData.amount}
-                      onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                      placeholder="0.00"
-                      step="0.01"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Categoria</label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    >
-                      <option value="food">🍽️ Alimentação</option>
-                      <option value="transport">🚗 Transporte</option>
-                      <option value="utilities">💡 Utilidades</option>
-                      <option value="entertainment">🎮 Entretenimento</option>
-                      <option value="other">📌 Outros</option>
-                    </select>
-                  </div>
-                </div>
-                <button type="submit" className="btn-primary" disabled={loading}>
-                  {loading ? '⏳ Salvando...' : '✅ Adicionar Despesa'}
-                </button>
-              </form>
-            </div>
-
-            <div className="section">
-              <h2>📝 Todas as Despesas</h2>
-              {expenses.length > 0 ? (
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Descrição</th>
-                      <th>Valor</th>
-                      <th>Categoria</th>
-                      <th>Data</th>
-                      <th>Ação</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {expenses.map((exp) => (
-                      <tr key={exp.id}>
-                        <td>{exp.description}</td>
-                        <td style={{ fontWeight: 'bold', color: '#667eea' }}>R$ {exp.amount?.toFixed(2)}</td>
-                        <td>{exp.category}</td>
-                        <td>{new Date(exp.date).toLocaleDateString('pt-BR')}</td>
-                        <td>
-                          <button
-                            onClick={() => handleDeleteExpense(exp.id)}
-                            disabled={loading}
-                            className="btn-danger"
-                          >
-                            🗑️ Deletar
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              ) : (
-                <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                  📭 Nenhuma despesa registrada
-                </div>
-              )}
-            </div>
-          </>
-        )}
-
-        {/* TASKS TAB */}
+        {/* TASKS */}
         {activeTab === 'tasks' && (
-          <div className="section">
-            <h2>✅ Tarefas Domésticas</h2>
-            {tasks.length > 0 ? (
-              <div style={{ display: 'grid', gap: '15px' }}>
-                {tasks.map((task) => (
-                  <div key={task.id} className="task-item">
-                    <div>
-                      <div className="task-title">{task.title}</div>
-                      {task.description && <div className="task-meta">{task.description}</div>}
-                    </div>
-                    <span className={`badge badge-${task.status === 'completed' ? 'success' : 'warning'}`}>
-                      {task.status === 'completed' ? '✅ Concluída' : '⏳ Pendente'}
+          <div className="space-y-6">
+            {spaces.map((space) => {
+              const Icon = spaceIcons[space as keyof typeof spaceIcons]
+              const spaceTasks = displayTasks.filter(t => t.space === space)
+              return (
+                <div key={space} className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl overflow-hidden shadow-xl">
+                  <div className="flex items-center gap-3 bg-gradient-to-r from-emerald-600 to-emerald-700 p-6">
+                    <Icon className="w-8 h-8 text-emerald-100" />
+                    <h3 className="text-xl font-bold text-white">{space}</h3>
+                    <span className="ml-auto bg-emerald-900/50 px-3 py-1 rounded-full text-sm text-emerald-100">
+                      {spaceTasks.filter(t => t.status === 'completed').length}/{spaceTasks.length}
                     </span>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                📭 Nenhuma tarefa registrada
-              </div>
-            )}
+                  <div className="p-6 space-y-3">
+                    {spaceTasks.map((task) => (
+                      <div key={task.id} className={`flex items-center justify-between p-4 rounded-lg transition-colors ${
+                        task.status === 'completed'
+                          ? 'bg-emerald-900/20 border border-emerald-700'
+                          : 'bg-slate-700/50 border border-slate-600'
+                      }`}>
+                        <div className="flex items-center gap-3 flex-1">
+                          {task.status === 'completed' ? (
+                            <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                          ) : (
+                            <Clock className="w-5 h-5 text-slate-400" />
+                          )}
+                          <div>
+                            <p className={`font-medium ${task.status === 'completed' ? 'line-through text-slate-500' : 'text-white'}`}>
+                              {task.title}
+                            </p>
+                            <p className="text-sm text-slate-400">{task.responsible}</p>
+                          </div>
+                        </div>
+                        <span className={`px-3 py-1 rounded-full text-xs font-medium ${
+                          task.status === 'completed'
+                            ? 'bg-emerald-900/50 text-emerald-300'
+                            : 'bg-slate-600 text-slate-300'
+                        }`}>
+                          {task.status === 'completed' ? 'Feita' : 'Pendente'}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )
+            })}
           </div>
         )}
 
-        {/* TEAM TAB */}
+        {/* TEAM */}
         {activeTab === 'team' && (
-          <div className="section">
-            <h2>👥 Equipe da Casa</h2>
-            {teamMembers.length > 0 ? (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Telefone</th>
-                    <th>Função</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {teamMembers.map((member) => (
-                    <tr key={member.id}>
-                      <td>{member.name}</td>
-                      <td>{member.email}</td>
-                      <td>{member.phone || '-'}</td>
-                      <td><span className="badge badge-success">{member.role}</span></td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            ) : (
-              <div style={{ textAlign: 'center', padding: '40px', color: '#999' }}>
-                📭 Nenhum membro registrado
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {displayTeamMembers.map((member) => (
+              <div key={member.id} className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 shadow-xl hover:shadow-2xl transition-all hover:border-emerald-500">
+                <h3 className="text-lg font-bold text-white mb-2">{member.name}</h3>
+                <p className="text-sm text-emerald-400 font-semibold mb-4">{member.role}</p>
+                {member.email && (
+                  <p className="text-sm text-slate-400 mb-2">📧 {member.email}</p>
+                )}
+                {member.phone && (
+                  <p className="text-sm text-slate-400">📱 {member.phone}</p>
+                )}
               </div>
-            )}
+            ))}
           </div>
         )}
 
-        {/* REPORTS TAB */}
+        {/* REPORTS */}
         {activeTab === 'reports' && (
-          <div className="section">
-            <h2>📈 Relatórios</h2>
-            <div style={{ display: 'grid', gap: '15px' }}>
-              <div style={{
-                padding: '20px',
-                border: '1px solid #e5e7eb',
-                borderRadius: '6px',
-                background: '#f9fafb',
-              }}>
-                <h3 style={{ color: '#667eea', marginBottom: '10px' }}>Resumo Mensal</h3>
-                <p style={{ color: '#666', marginBottom: '10px' }}>
-                  Total de Despesas: <strong>R$ {totalExpenses.toFixed(2)}</strong>
-                </p>
-                <p style={{ color: '#666', marginBottom: '10px' }}>
-                  Total de Registros: <strong>{expenses.length}</strong>
-                </p>
-                <p style={{ color: '#666' }}>
-                  Tarefas Concluídas: <strong>{tasks.filter(t => t.status === 'completed').length}/{tasks.length}</strong>
-                </p>
+          <div className="space-y-6">
+            {displayReports.map((report, idx) => (
+              <div key={idx} className="bg-slate-800/50 backdrop-blur border border-slate-700 rounded-xl p-6 shadow-xl">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-white">{report.name}</h3>
+                  <span className="bg-emerald-900/50 text-emerald-300 px-3 py-1 rounded-full text-sm font-medium">
+                    {report.date}
+                  </span>
+                </div>
+
+                {report.notes && (
+                  <p className="text-slate-300 text-sm mb-4 italic">💬 {report.notes}</p>
+                )}
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="text-emerald-400 font-semibold mb-3 flex items-center gap-2">
+                      <CheckCircle2 className="w-5 h-5" />
+                      Concluído ({report.completed.length})
+                    </h4>
+                    <ul className="space-y-2">
+                      {report.completed.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2 text-slate-300">
+                          <span className="w-2 h-2 bg-emerald-500 rounded-full" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div>
+                    <h4 className="text-amber-400 font-semibold mb-3 flex items-center gap-2">
+                      <Clock className="w-5 h-5" />
+                      Pendente ({report.pending.length})
+                    </h4>
+                    <ul className="space-y-2">
+                      {report.pending.map((item, i) => (
+                        <li key={i} className="flex items-center gap-2 text-slate-300">
+                          <span className="w-2 h-2 bg-amber-500 rounded-full" />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               </div>
-            </div>
+            ))}
           </div>
         )}
       </main>
 
-      <footer>
-        <p>💰 Casa Montenegro © 2026 - Gerenciador de Despesas e Tarefas</p>
-        <p className="subtitle">Sistema completo de gestão doméstica</p>
+      {/* FOOTER */}
+      <footer className="border-t border-slate-700 bg-slate-900/50 mt-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 text-center text-slate-400 text-sm">
+          <p>Casa Montenegro © 2026 • Sistema de Gerenciamento Doméstico</p>
+          <p className="mt-2">Equipe estruturada • Tarefas organizadas • Relatórios em tempo real</p>
+        </div>
       </footer>
     </div>
   )
