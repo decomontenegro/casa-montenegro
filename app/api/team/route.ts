@@ -1,24 +1,60 @@
 import { NextResponse } from 'next/server'
 
 export async function GET() {
-  return NextResponse.json([
+  // Dados REAIS da equipe
+  const teamMembers = [
     {
       id: '1',
-      name: 'João',
-      email: 'joao@casa.com',
-      phone: '(11) 9999-9999',
-      role: 'admin',
+      name: 'André Montenegro (Deco)',
+      role: 'Dono/Admin',
+      phone: '(85) 8817-7777',
+      email: 'deco@casa.com',
       status: 'active',
-      createdAt: new Date().toISOString(),
     },
     {
       id: '2',
-      name: 'Maria',
-      email: 'maria@casa.com',
-      phone: '(11) 8888-8888',
-      role: 'member',
+      name: 'Daniella',
+      role: 'Co-dona/Admin',
+      email: 'daniella@casa.com',
       status: 'active',
-      createdAt: new Date().toISOString(),
     },
-  ])
+    {
+      id: '3',
+      name: 'John',
+      role: 'Gerente',
+      email: 'john@casa.com',
+      status: 'active',
+    },
+    {
+      id: '4',
+      name: 'Jessica',
+      role: 'Financeiro',
+      email: 'jessica@casa.com',
+      status: 'active',
+    },
+    {
+      id: '5',
+      name: 'Deoclécio (Cléo)',
+      role: 'Operação/Limpeza',
+      email: 'cleo@casa.com',
+      status: 'active',
+    },
+    {
+      id: '6',
+      name: 'Regis Barcelos',
+      role: 'Operação/Limpeza',
+      phone: '(85) 9656-5120',
+      email: 'regis@casa.com',
+      status: 'active',
+    },
+    {
+      id: '7',
+      name: 'Menina',
+      role: 'Diarista',
+      email: 'menina@casa.com',
+      status: 'active',
+    },
+  ]
+
+  return NextResponse.json(teamMembers)
 }
